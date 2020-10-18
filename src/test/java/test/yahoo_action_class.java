@@ -73,18 +73,8 @@ public class yahoo_action_class extends Reusable_Library.Abstract_Class {
         if (msg.equalsIgnoreCase("Sorry, we don't recognize this email")){
             System.out.println("error msg match as expected");
         }else{
-            System.out.println("error msg didn't match as expected");
+            System.out.println("error msg didn't match as expected. \n actual msg is "+msg );
         }
-
-
-
-
-
-
-
-
-
-
 
 
 

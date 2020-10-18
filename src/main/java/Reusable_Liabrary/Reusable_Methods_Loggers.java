@@ -2,10 +2,8 @@ package Reusable_Liabrary;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -13,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Reusable_Methods_Loggers {
@@ -155,5 +154,32 @@ public class Reusable_Methods_Loggers {
             System.out.println("Unable to mouse click element " + elementName + " " + e);
         }
     }//end of click method
+
+
+
+    //method to capture screenshot when logger fails
+    public static void getScreenShot(WebDriver wDriver,ExtentTest logger,String imageName) {
+        try {
+            String fileName = imageName + ".png";
+            String directory = "src/main/java/HTML_Report/Screenshots/";
+            File sourceFile = ((TakesScreenshot) wDriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(sourceFile, new File(directory + fileName));
+            //String imgPath = directory + fileName;
+            String image = logger.addScreenCapture("Screenshots/" + fileName);
+            logger.log(LogStatus.FAIL, "", image);
+        } catch (Exception e) {
+            logger.log(LogStatus.FAIL, "Error Occured while taking SCREENSHOT!!!");
+            e.printStackTrace();
+        }
+    }//end of screenshot method
+
+
+
+
+
+
+
+
+
 
 }//end of java class
