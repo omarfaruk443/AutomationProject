@@ -59,7 +59,7 @@ public class Data_Driven_Mortgage {
             Thread.sleep(2000);
 
             //capture the month payment
-            String result = Reusable_Methods.getText(driver,"//*[@class='left-cell']/following::h3[contains(text(),'$')]","Monthly Payment");
+            String result = Reusable_Methods.captureText(driver,"//*[@class='left-cell']/following::h3[contains(text(),'$')]","Monthly Payment");
             System.out.println("My total monthly payment is " + result);
 
             //store and send it to empty column is excel

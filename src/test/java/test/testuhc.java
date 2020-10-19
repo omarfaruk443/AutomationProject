@@ -21,7 +21,7 @@ public class testuhc {
         Reusable_Methods.navigate(driver, "https://www.uhc.com", "UHC.COM");
         Thread.sleep(2000);//put some delay
 
-        String rrrr = Reusable_Methods.getText(driver,"//*[@class='lg-display-inlineBlock mr-6']","display name");
+        String rrrr = Reusable_Methods.captureText(driver,"//*[@class='lg-display-inlineBlock mr-6']","display name");
         //String[] rtn = rrrr.split("");
         System.out.println(" " +rrrr);
 

@@ -18,8 +18,6 @@ public class UHC_ReUsableMethod {
         WebDriver driver = new ChromeDriver(options);//options variable should be passed here
 
 
-
-
         //Creating an ArrayList to input FirstName value
         ArrayList<String> firstNameList = new ArrayList<>();
         firstNameList.add("Donald");
@@ -51,74 +49,70 @@ public class UHC_ReUsableMethod {
         zipCodeList.add("11010");
 
 
-
-        for (int i =0; i < firstNameList.size(); i++){
-             //lets navigate to UHC.com
-            Reusable_Methods.navigate(driver,"https://www.uhc.com","UHC.COM ");
-                Thread.sleep(2000);//put some delay
+        for (int i = 0; i < firstNameList.size(); i++) {
+            //lets navigate to UHC.com
+            Reusable_Methods.navigate(driver, "https://www.uhc.com", "UHC.COM ");
+            Thread.sleep(2000);//put some delay
 
             //verify that the Home Page Title Contains Health insurance plans
-            Reusable_Methods.getTitleContains(driver,"Health insurance plans","UHC.com ");
+            Reusable_Methods.getTitleContains(driver, "Health insurance plans", "UHC.com ");
 
             //click on find a doctor link
-            Reusable_Methods.click(driver,"//*[text()='Find a Doctor']","Find a Doctor ");
-                Thread.sleep(1000);//put some delay
+            Reusable_Methods.click(driver, "//*[text()='Find a Doctor']", "Find a Doctor ");
+            Thread.sleep(1000);//put some delay
 
             //click on sign in to find a doctor
-            Reusable_Methods.click(driver,"//*[@id='btn-sign-in']","Sign in to Find a Provider ");
-                Thread.sleep(4000);//put some delay
+            Reusable_Methods.click(driver, "//*[@id='btn-sign-in']", "Sign in to Find a Provider ");
+            Thread.sleep(4000);//put some delay
 
             //switch to new tab
-            Reusable_Methods.switchtabs(driver,1);
-                //Thread.sleep(2000);//put some delay
+            Reusable_Methods.switchtabs(driver, 1);
+            //Thread.sleep(2000);//put some delay
 
-            Reusable_Methods.click(driver,"//*[@id='registerbutton']"," Register Button ");
-                Thread.sleep(4000);//put some delay
+            Reusable_Methods.click(driver, "//*[@id='registerbutton']", " Register Button ");
+            Thread.sleep(4000);//put some delay
 
             //input first Name
-            Reusable_Methods.sendkeys(driver,"//*[@id='piFirstName']",firstNameList.get(i),"First Name ");
-                Thread.sleep(500);//put some delay
+            Reusable_Methods.sendkeys(driver, "//*[@id='piFirstName']", firstNameList.get(i), "First Name ");
+            Thread.sleep(500);//put some delay
 
             //input Last Name
-            Reusable_Methods.sendkeys(driver,"//*[@id='piLastName']",lastNameList.get(i),"Last Name ");
-                Thread.sleep(500);//put some delay
+            Reusable_Methods.sendkeys(driver, "//*[@id='piLastName']", lastNameList.get(i), "Last Name ");
+            Thread.sleep(500);//put some delay
 
             //Input Date Of Birth
-            Reusable_Methods.sendkeys(driver,"//*[@id='piDoB']",dateOFBirthList.get(i),"Date Of Birth ");
-                Thread.sleep(500);//put some delay
+            Reusable_Methods.sendkeys(driver, "//*[@id='piDoB']", dateOFBirthList.get(i), "Date Of Birth ");
+            Thread.sleep(500);//put some delay
 
             //clicking on No Member ID card
-            Reusable_Methods.click(driver,"//*[@ng-value='regOptions.no']"," No Member ID Card ");
-                Thread.sleep(500);//put some delay
+            Reusable_Methods.click(driver, "//*[@ng-value='regOptions.no']", " No Member ID Card ");
+            Thread.sleep(500);//put some delay
 
             //enter last 6 digit of SSN
-            Reusable_Methods.sendkeys(driver,"//*[@id='piSSN']", ssnList.get(i), "SSN ");
-                Thread.sleep(500);//put some delay
+            Reusable_Methods.sendkeys(driver, "//*[@id='piSSN']", ssnList.get(i), "SSN ");
+            Thread.sleep(500);//put some delay
 
             //enter zipcode
-            Reusable_Methods.sendkeys(driver,"//*[@id='piZipCode']", zipCodeList.get(i), "ZipCode ");
-                Thread.sleep(500);//put some delay
+            Reusable_Methods.sendkeys(driver, "//*[@id='piZipCode']", zipCodeList.get(i), "ZipCode ");
+            Thread.sleep(500);//put some delay
 
             //click on continue button
-            Reusable_Methods.click(driver,"//*[@id='step1Btn']","Continue Button ");
+            Reusable_Methods.click(driver, "//*[@id='step1Btn']", "Continue Button ");
             Thread.sleep(5000);//put some delay
 
             //get the error message
-           String error = Reusable_Methods.getText(driver,"//*[@ng-if='isPageErrorExistent']","Error Message ");
-           System.out.println("Error Message = \n" +error);
+            String error = Reusable_Methods.captureText(driver, "//*[@ng-if='isPageErrorExistent']", "Error Message ");
+            System.out.println("Error Message = \n" + error);
 
 
             driver.close();//close the current tab
             //switch to the previous Tab
-            Reusable_Methods.switchtabs(driver,0);
+            Reusable_Methods.switchtabs(driver, 0);
             Thread.sleep(1000);
         }//end of for loop
 
 
-
-
         driver.quit();//quit the driver
-
 
 
     }//end of main

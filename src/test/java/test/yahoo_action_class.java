@@ -42,7 +42,7 @@ public class yahoo_action_class extends Reusable_Library.Abstract_Class {
 
 
         //capture the yahoo search result
-        String capture = Reusable_Methods.getText(driver,"//*[@class='compPagination']","Search Result");
+        String capture = Reusable_Methods.captureText(driver,"//*[@class='compPagination']","Search Result");
         String[]  result = capture.split("Next");
         System.out.println("my Search result is " +result);
 
@@ -68,13 +68,13 @@ public class yahoo_action_class extends Reusable_Library.Abstract_Class {
         Reusable_Methods.click(driver,"//*[@name='signin']","Next ");
         Thread.sleep(2000);
 
-       String msg = Reusable_Methods.getText(driver,"//*[@class='error-msg']","error msg");
+       String msg = Reusable_Methods.captureText(driver,"//*[@class='error-msg']","error msg");
 
         if (msg.equalsIgnoreCase("Sorry, we don't recognize this email")){
             System.out.println("error msg match as expected");
         }else{
             System.out.println("error msg didn't match as expected. \n actual msg is "+msg );
-        }
+        }//end of if else
 
 
 

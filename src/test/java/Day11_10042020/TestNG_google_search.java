@@ -30,7 +30,7 @@ public class TestNG_google_search {
 
     @Test(priority = 2)
     public void getSearchResult(){
-        String result = Reusable_Methods.getText(driver,"//*[@id='result-stats']","Result");
+        String result = Reusable_Methods.captureText(driver,"//*[@id='result-stats']","Result");
         System.out.println("My search reslt is " + result);
     }//end of test 2
 

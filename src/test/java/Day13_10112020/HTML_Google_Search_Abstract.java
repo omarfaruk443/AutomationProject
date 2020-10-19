@@ -19,7 +19,7 @@ public class HTML_Google_Search_Abstract extends Abstract_Class {
 
     @Test(dependsOnMethods = "Google_Search")
     public void Google_Search_Result() throws InterruptedException {
-        String result = Reusable_Methods_Loggers.captureResult(driver, "//*[@id='result-stats']", logger, "Search Result");
+        String result = Reusable_Methods_Loggers.captureText(driver, "//*[@id='result-stats']", logger, "Search Result");
         String[] arrayResult = result.split(" ");
         logger.log(LogStatus.PASS, "My search number is " + arrayResult[1]);
         //after all the test steps per @Test you must end the test as well

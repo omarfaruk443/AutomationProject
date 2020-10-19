@@ -40,6 +40,28 @@ public class Reusable_Methods {
 
 
 
+
+
+
+
+
+    //navigate to any Website or URL
+    public static void navigate(WebDriver driver,String url,String website ){
+        //navigate to the Website
+        driver.navigate().to(url);
+        System.out.println("Navigating to " +website+ " Home Page");
+    }//end of Navigate method
+
+
+
+
+
+
+
+
+
+
+
     //reusable method to click on any elements on any websites
     public static void click(WebDriver driver,String xpathLocator,String elementName){
         //define explicit wait
@@ -99,7 +121,7 @@ public class Reusable_Methods {
 
 
    //reusable return string method to get a text from an element on any websites
-    public static String getText(WebDriver driver, String xpathLocator, String elementName){
+    public static String captureText(WebDriver driver, String xpathLocator, String elementName){
         //define explicit wait
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         String rtn = "";
@@ -141,7 +163,7 @@ public class Reusable_Methods {
 
 
     //reusable method to get Title from any websites
-    public static void getTitleVerifyExpected(WebDriver driver,String expectedTitle,String website){
+    public static void getTitleVerifyWithExpected(WebDriver driver,String expectedTitle,String website){
                 System.out.println("getting Title from The Website " + website);
                     String actual = driver.getTitle();
                     String expected = expectedTitle;
@@ -174,18 +196,6 @@ public class Reusable_Methods {
         }//end of exception
     }//end of Select by visible text method
 
-
-
-
-
-
-
-    //navigate to any Website or URL
-    public static void navigate(WebDriver driver,String url,String website ){
-        //navigate to the Website
-        driver.navigate().to(url);
-        System.out.println("Navigating to " +website+ " Home Page");
-    }//end of Navigate method
 
 
 
@@ -239,7 +249,7 @@ public class Reusable_Methods {
 
 
 
-
+    //to check/verify if checkbox in any kind of element is selected (which should be default)
     public static void checkBoxStateSelected(WebDriver driver,String locator,String elementName){
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
@@ -261,7 +271,7 @@ public class Reusable_Methods {
 
 
 
-
+    //to check/verify if checkbox in any kind of element is not selected (which should be default)
     public static void checkBoxStateNotSelected(WebDriver driver,String locator,String elementName){
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
@@ -284,6 +294,9 @@ public class Reusable_Methods {
 
 
 
+
+
+    //get tabs or link count from a group of element which shares same identity
     public static void TabsCount(WebDriver driver,String locator, String elementName){
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
@@ -296,6 +309,37 @@ public class Reusable_Methods {
             System.out.println("Unable to get Tabs Count From " + elementName + " " + e);
         }//end of exception
     }//end of TabsCount method
+
+
+
+
+
+
+
+
+    //verify if one of the msg/report/text matches my expected one
+    public static void verifyStringToExpectedString(WebDriver driver,String actual,String expected, String elementName){
+        WebDriverWait wait = new WebDriverWait(driver,timeOut);
+        try{
+            System.out.println("Verifying if " + elementName + " is matching my expected One '");
+            if (actual.equalsIgnoreCase(expected)){
+                System.out.println(elementName+" Matched as Expected");
+            }else{
+                System.out.println(elementName+ " didn't match as expected. \n actual is "+actual );
+            }
+        } catch (Exception e) {
+            System.out.println("Unable to verify " + elementName + "with my expected one " + e);
+        }//end of exception
+    }//end of verify string to string method
+
+
+
+
+
+
+
+
+
 
 
 
