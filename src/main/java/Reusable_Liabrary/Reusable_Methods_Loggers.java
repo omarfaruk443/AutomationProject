@@ -11,6 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,6 +82,23 @@ public class Reusable_Methods_Loggers {
             getScreenShot(driver,logger,elementName);
         }//end of exception
     }//end of click method
+
+
+
+    //reusable method to click on any PopUp element on any websites
+    public static void popup(WebDriver driver, String locator,ExtentTest logger,String elementName){
+        //define explicit wait
+        WebDriverWait wait = new WebDriverWait(driver,timeOut);
+        try{
+            System.out.println("Clicking on PopUp ");
+            logger.log(LogStatus.INFO,"Clicking on PopUp ");
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator))).click();
+        }catch (Exception err){
+            System.out.println("Unable to Find any PopUp. Let's move to Next Item ");
+            logger.log(LogStatus.FAIL,"Unable to find any PopUp. Let's move to Next Item ");
+            getScreenShot(driver,logger,elementName);
+        }//end of exception
+    }//end of popup method
 
 
 
@@ -180,6 +200,35 @@ public class Reusable_Methods_Loggers {
 
         return result;
     }//end of get result method
+
+
+
+
+
+
+
+
+
+
+
+//reusable method to capture a value/text from a page
+    public static String captureTextByIndex(WebDriver driver, String locator,int indexNumber,ExtentTest logger,String elementName){
+        //define explicit wait
+        WebDriverWait wait = new WebDriverWait(driver,timeOut);
+        String result = "";
+        try{
+            System.out.println("Capturing text on element " + elementName);
+            logger.log(LogStatus.INFO,"Capturing text on element " + elementName);
+            result = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator))).get(indexNumber).getText();
+            getScreenShot(driver,logger,elementName);
+        }catch (Exception err){
+            System.out.println("Unable to capture text on element " + err);
+            logger.log(LogStatus.FAIL,"Unable to capture text on element " + err);
+            getScreenShot(driver,logger,elementName);
+        }//end of exception
+
+        return result;
+    }//end of get result By Index  method
 
 
 
@@ -309,6 +358,7 @@ public class Reusable_Methods_Loggers {
 
 
 
+
     //method to capture screenshot when logger fails
     public static void getScreenShot(WebDriver wDriver,ExtentTest logger,String imageName) {
         try {
@@ -337,24 +387,20 @@ public class Reusable_Methods_Loggers {
 
     //reusable method to get Title from any websites and verify it contains certain  words
     public static void getTitleContains(WebDriver driver,String contain,ExtentTest logger,String website){
-        try {
-            System.out.println("getting Title from The Website " +website+ "And ");
-            logger.log(LogStatus.INFO,"getting Title from The Website " +website+ "And ");
+            System.out.println("getting Title from The Website " +website);
+            logger.log(LogStatus.INFO,"getting Title from The Website " +website);
             System.out.println("Trying to verify Title of the Website with Title that contains " +contain);
             logger.log(LogStatus.INFO,"Trying to verify Title of the Website with Title that contains " +contain);
             String actual = driver.getTitle();
-            if(driver.getTitle().contains(contain)){
+            if(driver.getTitle().contains(contain) ==true){
                 System.out.println("Title Matched with containing  word " +contain);
                 logger.log(LogStatus.PASS,"Title Matched with containing  word " +contain);
+                getScreenShot(driver,logger,website);
             }else{
                 System.out.println("Title didn't match. Actual title is  " + actual);
                 logger.log(LogStatus.FAIL,"Title didn't match. Actual title is  " + actual);
+                getScreenShot(driver,logger,website);
             }//end of if_else statement
-        }catch(Exception err){
-            System.out.println("Unable to get Title from The Website " +website +err);
-            logger.log(LogStatus.FAIL,"Unable to get Title from The Website " +website +err);
-            getScreenShot(driver,logger,website);
-        }//end of exception
     }//end of get title contains method
 
 
@@ -380,6 +426,7 @@ public class Reusable_Methods_Loggers {
         if(expected.equalsIgnoreCase(actual)){
             System.out.println("Title Matched");
             logger.log(LogStatus.PASS,"Title Matched");
+            getScreenShot(driver,logger,website);
         }else{
             System.out.println("Title didn't match. Actual title is  " + actual);
             logger.log(LogStatus.FAIL,"Title didn't match. Actual title is  " + actual);
@@ -568,6 +615,35 @@ public class Reusable_Methods_Loggers {
             getScreenShot(driver,logger,elementName);
         }//end of exception
     }//end of verify string to string method
+
+
+
+
+
+
+
+
+
+
+
+
+    //method to upload a file(image,doc, etc...) from your computer by using robot command
+    public static void uploadFile(String filePath) throws AWTException {
+        StringSelection ss = new StringSelection(filePath);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss,null);
+        Robot robot=new Robot();
+        robot.delay(1000);
+        //This step clicks on 'Browse' button
+        robot.keyPress(KeyEvent.VK_ENTER);
+        //This step clicks on 'File name' textbox
+        robot.keyPress(KeyEvent.VK_ENTER);
+        //Next two steps does "Ctrl+V" and paste the filepath
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        //This step attached the file and clicks on 'Open'
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyPress(KeyEvent.VK_ENTER);
+    }//end of upload file using Robot command
 
 
 
