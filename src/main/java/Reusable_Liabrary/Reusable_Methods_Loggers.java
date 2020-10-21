@@ -26,7 +26,7 @@ public class Reusable_Methods_Loggers {
     public static WebDriver getDriver() throws IOException, InterruptedException {
         Thread.sleep(1000);
         //kill all the chrome driver instance before opening a new one
-        //Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
+        Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
         Thread.sleep(1000);
         //set the chrome driver location
         System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe");
@@ -93,6 +93,7 @@ public class Reusable_Methods_Loggers {
             System.out.println("Clicking on PopUp ");
             logger.log(LogStatus.INFO,"Clicking on PopUp ");
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator))).click();
+            logger.log(LogStatus.PASS,"DONE");
         }catch (Exception err){
             System.out.println("Unable to Find any PopUp. Let's move to Next Item ");
             logger.log(LogStatus.FAIL,"Unable to find any PopUp. Let's move to Next Item ");

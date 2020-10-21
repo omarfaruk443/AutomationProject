@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 
-public class FedEx_Ai extends Reusable_Library.Abstract_Class {
+public class FedEx_Ai extends Abstract_Class_Cross_Browser {
 
     @Test
     public void fedEx() throws InterruptedException, AWTException {
@@ -26,7 +26,7 @@ public class FedEx_Ai extends Reusable_Library.Abstract_Class {
             Thread.sleep(5000);
 
         //Step-4:verify title contains Fedex Office Print
-        Reusable_Methods_Loggers.getTitleContains(driver,"Fedex Office Print",logger,"FEDEX PRINT");
+        Reusable_Methods_Loggers.getTitleContains(driver,"FedEx Office Print",logger,"FEDEX PRINT");
             Thread.sleep(2000);
 
         //Step-5:sometime there might be a popup, lets close it
@@ -37,14 +37,14 @@ public class FedEx_Ai extends Reusable_Library.Abstract_Class {
         Reusable_Methods_Loggers.click(driver,"//*[@alt='Document Printing']",logger,"Document Printing");
             Thread.sleep(2000);
                 //sometime there might be a popup, lets close it
-                Reusable_Methods_Loggers.click(driver,"//*[@alt='close']",logger,"PopUp");
+                Reusable_Methods_Loggers.popup(driver,"//*[@alt='close']",logger,"PopUp");
                     Thread.sleep(1000);
 
         //Step-7:click on Copies & Custom Projects
         Reusable_Methods_Loggers.click(driver,"//*[@title='Copies & Custom Projects']",logger,"Copies & Custom Projects");
             Thread.sleep(2000);
                 //sometime there might be a popup, lets close it
-                Reusable_Methods_Loggers.click(driver,"//*[@alt='close']",logger,"PopUp");
+                Reusable_Methods_Loggers.popup(driver,"//*[@alt='close']",logger,"PopUp");
                     Thread.sleep(1000);
 
         //Step-8:click on Use Your file button
@@ -52,11 +52,11 @@ public class FedEx_Ai extends Reusable_Library.Abstract_Class {
             Thread.sleep(2000);
 
         //Step-9:upload my file
-        Reusable_Methods_Loggers.uploadFile("C:/Users/oshuv/Videos/Captures/Zoom Meeting 10_18_2020 11_34_38 AM.png");
-            Thread.sleep(2000);
+        Reusable_Methods_Loggers.uploadFile("C:\\Users\\oshuv\\Videos\\Captures\\file008.png");
+            Thread.sleep(20000);
 
         //Step-10:click on continue with existing
-        Reusable_Methods_Loggers.popup(driver,"//*[text(),'CONTINUE WITH EXISTING']",logger,"Resulotion");
+        Reusable_Methods_Loggers.popup(driver,"//*[contains(text(),'CONTINUE WITH EXISTING')]",logger,"Resulotion");
             Thread.sleep(2000);
 
         //Step-11:Change the Quantity to 5
@@ -64,11 +64,11 @@ public class FedEx_Ai extends Reusable_Library.Abstract_Class {
             Thread.sleep(500);
 
         //Step-12:click on add to cart
-        Reusable_Methods_Loggers.click(driver,"//*[text(),'Add to cart']",logger,"Add to cart");
+        Reusable_Methods_Loggers.click(driver,"//*[contains(text(),'Add to cart')]",logger,"Add to cart");
             Thread.sleep(4000);
 
         //Step-13:click on checkout
-        Reusable_Methods_Loggers.click(driver,"//*[text(),'Checkout']",logger,"Checkout");
+        Reusable_Methods_Loggers.click(driver,"//*[contains(text(),'Checkout')]",logger,"Checkout");
             Thread.sleep(2000);
 
         //Step-14:click on PROCEED AS GUEST
