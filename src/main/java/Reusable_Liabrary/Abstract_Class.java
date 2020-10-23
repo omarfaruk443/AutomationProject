@@ -1,4 +1,4 @@
-package Reusable_Library;
+package Reusable_Liabrary;
 
 import Reusable_Liabrary.Reusable_Methods_Loggers;
 import com.relevantcodes.extentreports.ExtentReports;
@@ -20,8 +20,10 @@ public class Abstract_Class {
 
     @BeforeSuite
     public void setPrecondition() throws IOException, InterruptedException {
-        //set the driver here
+        //set the chrome driver here
         driver = Reusable_Methods_Loggers.getDriver();
+        //set the firefox driver here
+        //driver = Reusable_Methods_Loggers.fireFoxDriver();
         //set the report path here
         reports = new ExtentReports("src/main/java/HTML_Report/AutomationReport.html",true);
     }//end of before suite

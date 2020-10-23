@@ -16,7 +16,7 @@ public class Abstract_Class_Cross_Browser {
     public static ExtentTest logger;
 
     @BeforeSuite
-    public void setPrecondition() throws IOException, InterruptedException {
+    public void setPrecondition(){
         //set the report path here
         reports = new ExtentReports("src/main/java/HTML_Report/AutomationReport.html",true);
     }//end of before suite
@@ -32,9 +32,7 @@ public class Abstract_Class_Cross_Browser {
             System.setProperty("webdriver.gecko.driver","src/main/resources/geckodriver.exe");
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
-        } else if(browser.equalsIgnoreCase("safari")){
-            //define your safari driver here
-        }
+        }//end of if else
         logger = reports.startTest(methodName.getName() + "-" + browser.toUpperCase());
     }//end of before method
 

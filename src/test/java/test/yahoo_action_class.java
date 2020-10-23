@@ -1,5 +1,6 @@
 package test;
 
+import Reusable_Liabrary.Abstract_Class;
 import Reusable_Liabrary.Reusable_Methods;
 import Reusable_Liabrary.Reusable_Methods_Loggers;
 import org.openqa.selenium.By;
@@ -11,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.IOException;
 import java.util.List;
 
-public class yahoo_action_class extends Reusable_Library.Abstract_Class {
+public class yahoo_action_class extends Abstract_Class {
 
     @Test
     public void navigate() throws IOException, InterruptedException {

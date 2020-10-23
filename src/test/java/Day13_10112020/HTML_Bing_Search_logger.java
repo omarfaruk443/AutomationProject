@@ -1,6 +1,6 @@
 package Day13_10112020;
 
-import Reusable_Library.Abstract_Class;
+import Reusable_Liabrary.Abstract_Class;
 import Reusable_Liabrary.Reusable_Methods;
 import Reusable_Liabrary.Reusable_Methods_Loggers;
 import com.relevantcodes.extentreports.ExtentReports;

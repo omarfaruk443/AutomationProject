@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -26,7 +27,7 @@ public class Reusable_Methods_Loggers {
     public static WebDriver getDriver() throws IOException, InterruptedException {
         Thread.sleep(1000);
         //kill all the chrome driver instance before opening a new one
-        Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
+        //Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
         Thread.sleep(1000);
         //set the chrome driver location
         System.setProperty("webdriver.chrome.driver","src/main/resources/chromedriver.exe");
@@ -43,6 +44,21 @@ public class Reusable_Methods_Loggers {
         return driver;
     }//end of get driver
 
+
+
+
+
+
+
+    public static WebDriver fireFoxDriver() throws IOException {
+        //kill all the chrome driver instance before opening a new one
+        //Runtime.getRuntime().exec("taskkill /F /IM geckodriver.exe /T");
+        //set the firefox driver location
+        System.setProperty("webdriver.gecko.driver","src/main/resources/geckodriver.exe");
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        return driver;
+    }//end of firefox driver
 
 
 
@@ -73,15 +89,37 @@ public class Reusable_Methods_Loggers {
         //define explicit wait
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator))).click();
             System.out.println("Clicking on element " + elementName);
             logger.log(LogStatus.INFO,"Clicking on element " + elementName);
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator))).click();
         }catch (Exception err){
-            System.out.println("Unable to click on element " + err);
-            logger.log(LogStatus.FAIL,"Unable to click on element " + err);
+            System.out.println("Unable to click on element "+elementName + err);
+            logger.log(LogStatus.FAIL,"Unable to click on element " +elementName + err);
             getScreenShot(driver,logger,elementName);
         }//end of exception
     }//end of click method
+
+
+
+
+
+
+
+
+    //reusable method to click on any element on any websites
+    public static void clickPopUpByIndex(WebDriver driver, String locator,int indexNumber,ExtentTest logger,String elementName){
+        //define explicit wait
+        WebDriverWait wait = new WebDriverWait(driver,timeOut);
+        try{
+            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator))).get(indexNumber).click();
+            System.out.println("Clicking on PopUp ");
+            logger.log(LogStatus.INFO,"Clicking on PopUp ");
+        }catch (Exception err){
+            System.out.println("Unable to Find any PopUp. Let's move to Next Item ");
+            logger.log(LogStatus.FAIL,"Unable to Find any PopUp. Let's move to Next Item ");
+            getScreenShot(driver,logger,elementName);
+        }//end of exception
+    }//end of click popup by index method
 
 
 
@@ -90,10 +128,9 @@ public class Reusable_Methods_Loggers {
         //define explicit wait
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator))).click();
             System.out.println("Clicking on PopUp ");
             logger.log(LogStatus.INFO,"Clicking on PopUp ");
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator))).click();
-            logger.log(LogStatus.PASS,"DONE");
         }catch (Exception err){
             System.out.println("Unable to Find any PopUp. Let's move to Next Item ");
             logger.log(LogStatus.FAIL,"Unable to find any PopUp. Let's move to Next Item ");
@@ -115,9 +152,9 @@ public class Reusable_Methods_Loggers {
         //define explicit wait
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
+            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator))).get(indexNumber).click();
             System.out.println("Clicking on element " + elementName);
             logger.log(LogStatus.INFO,"Clicking on element " + elementName);
-            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator))).get(indexNumber).click();
         }catch (Exception err){
             System.out.println("Unable to click on element " + err);
             logger.log(LogStatus.FAIL,"Unable to click on element " + err);
@@ -138,11 +175,11 @@ public class Reusable_Methods_Loggers {
         //define explicit wait
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
-            System.out.println("Typing on element " + elementName);
-            logger.log(LogStatus.INFO,"Typing on element " + elementName);
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
             element.clear();
             element.sendKeys(userValue);
+            System.out.println("Typing on element " + elementName);
+            logger.log(LogStatus.INFO,"Typing on element " + elementName);
         }catch (Exception err){
             System.out.println("Unable to type on element " + err);
             logger.log(LogStatus.FAIL,"Unable to type on element " + err);
@@ -218,10 +255,10 @@ public class Reusable_Methods_Loggers {
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         String result = "";
         try{
-            System.out.println("Capturing text on element " + elementName);
-            logger.log(LogStatus.INFO,"Capturing text on element " + elementName);
             result = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator))).get(indexNumber).getText();
             getScreenShot(driver,logger,elementName);
+            System.out.println("Capturing text on element " + elementName);
+            logger.log(LogStatus.INFO,"Capturing text on element " + elementName);
         }catch (Exception err){
             System.out.println("Unable to capture text on element " + err);
             logger.log(LogStatus.FAIL,"Unable to capture text on element " + err);
@@ -249,16 +286,16 @@ public class Reusable_Methods_Loggers {
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try
         {
-            System.out.println("\nSelecting " + userInput + elementName);
-            logger.log(LogStatus.INFO,"\nSelecting "+userInput + elementName);
             WebElement dropDown = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
             Select selectDropDown= new Select(dropDown);
             selectDropDown.selectByVisibleText(userInput);
+            System.out.println("Selecting " + userInput + elementName);
+            logger.log(LogStatus.INFO,"Selecting "+userInput + elementName);
         }
         catch (Exception err)
         {
-            System.out.println("\nUnable to select from drop down " + err);
-            logger.log(LogStatus.FAIL,"\nUnable to select from drop down " + err);
+            System.out.println("Unable to select from drop down " + err);
+            logger.log(LogStatus.FAIL,"Unable to select from drop down " + err);
             getScreenShot(driver,logger,elementName);
         }
     }//end of drop down by text method
@@ -276,13 +313,13 @@ public class Reusable_Methods_Loggers {
     public static void typeAndSubmit(WebDriver driver,String locator, String userInput,ExtentTest logger, String elementName){
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         try{
-            System.out.println("Entering a value on element " + elementName);
-            logger.log(LogStatus.INFO,"Entering a value on element " + elementName);
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
             element.clear();
             element.sendKeys(userInput);
             Thread.sleep(1000);
             element.sendKeys(Keys.ENTER); //this is another way to submit to an element using key event
+            System.out.println("Entering a value on element " + elementName);
+            logger.log(LogStatus.INFO,"Entering a value on element " + elementName);
         } catch (Exception e) {
             System.out.println("Unable to enter on element " + elementName + " " + e);
             logger.log(LogStatus.FAIL,"Unable to enter on element " + elementName + " " + e);
@@ -307,10 +344,10 @@ public class Reusable_Methods_Loggers {
         WebDriverWait wait = new WebDriverWait(driver,timeOut);
         Actions actions = new Actions(driver);
         try{
-            System.out.println("Mouse clicking a value on element " + elementName);
-            logger.log(LogStatus.INFO,"Mouse clicking a value on element " + elementName);
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
             actions.moveToElement(element).click().perform();
+            System.out.println("Mouse clicking a value on element " + elementName);
+            logger.log(LogStatus.INFO,"Mouse clicking a value on element " + elementName);
         } catch (Exception e) {
             System.out.println("Unable to mouse click element " + elementName + " " + e);
             logger.log(LogStatus.FAIL,"Unable to mouse click element " + elementName + " " + e);
@@ -318,6 +355,51 @@ public class Reusable_Methods_Loggers {
         }//end of exception
     }//end of click method
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //method to click on an element by using your mouse
+    public static void mouseClickPopUp(WebDriver driver,String locator,ExtentTest logger,String elementName){
+        WebDriverWait wait = new WebDriverWait(driver,timeOut);
+        Actions actions = new Actions(driver);
+        try{
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
+            actions.moveToElement(element).click().perform();
+            System.out.println("Mouse clicking on PopUp ");
+            logger.log(LogStatus.INFO,"Mouse clicking on PopUp ");
+        } catch (Exception e) {
+            System.out.println("No PopUp found, let's move to Next Item");
+            logger.log(LogStatus.FAIL,"No PopUp found, let's move to Next Item");
+            getScreenShot(driver,logger,elementName);
+        }//end of exception
+    }//end of click method
+
+
+//method to click on an element by using your mouse
+    public static void mouseClickPopUpByIndex(WebDriver driver,String locator,int indexNumber,ExtentTest logger,String elementName){
+        WebDriverWait wait = new WebDriverWait(driver,timeOut);
+        Actions actions = new Actions(driver);
+        try{
+            WebElement element = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator))).get(indexNumber);
+            actions.moveToElement(element).click().perform();
+            System.out.println("Mouse clicking on PopUp ");
+            logger.log(LogStatus.INFO,"Mouse clicking on PopUp ");
+        } catch (Exception e) {
+            System.out.println("No PopUp found, let's move to Next Item");
+            logger.log(LogStatus.FAIL,"No PopUp found, let's move to Next Item");
+            getScreenShot(driver,logger,elementName);
+        }//end of exception
+    }//end of click method
 
 
 
@@ -350,6 +432,25 @@ public class Reusable_Methods_Loggers {
 
 
 
+    //method to move to an element by using your mouse
+    public static void mouseHoverByIndex(WebDriver driver,String locator,int indexNumber,ExtentTest logger,String elementName){
+        WebDriverWait wait = new WebDriverWait(driver,timeOut);
+        Actions actions = new Actions(driver);
+        try{
+            System.out.println("Mouse moving to an element " + elementName);
+            logger.log(LogStatus.INFO,"Mouse moving to an element " + elementName);
+            WebElement element = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(locator))).get(indexNumber);
+            actions.moveToElement(element).perform();
+        } catch (Exception e) {
+            System.out.println("Unable to move mouse to an element " + elementName + " " + e);
+            logger.log(LogStatus.FAIL,"Unable to move mouse to an element " + elementName + " " + e);
+            getScreenShot(driver,logger,elementName);
+        }//end of exception
+    }//end of Mouse Hover method
+
+
+
+
 
 
 
@@ -369,7 +470,7 @@ public class Reusable_Methods_Loggers {
             FileUtils.copyFile(sourceFile, new File(directory + fileName));
             //String imgPath = directory + fileName;
             String image = logger.addScreenCapture("Screenshots/" + fileName);
-            logger.log(LogStatus.FAIL, "", image);
+            logger.log(LogStatus.INFO, "", image);
         } catch (Exception e) {
             logger.log(LogStatus.FAIL, "Error Occured while taking SCREENSHOT!!!");
             e.printStackTrace();
@@ -399,7 +500,7 @@ public class Reusable_Methods_Loggers {
                 getScreenShot(driver,logger,website);
             }else{
                 System.out.println("Title didn't match. Actual title is  " + actual);
-                logger.log(LogStatus.FAIL,"Title didn't match. Actual title is  " + actual);
+                logger.log(LogStatus.INFO,"Title didn't match. Actual title is  " + actual);
                 getScreenShot(driver,logger,website);
             }//end of if_else statement
     }//end of get title contains method
@@ -628,8 +729,8 @@ public class Reusable_Methods_Loggers {
 
 
 
-    //method to upload a file(image,doc, etc...) from your computer by using robot command
-    public static void uploadFile(String filePath) throws AWTException {
+//    //method to upload a file(image,doc, etc...) from your computer by using robot command
+    public static void uploadFileOld(String filePath,ExtentTest logger) throws AWTException {
         StringSelection ss = new StringSelection(filePath);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss,null);
         Robot robot=new Robot();
@@ -644,10 +745,93 @@ public class Reusable_Methods_Loggers {
         //This step attached the file and clicks on 'Open'
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyPress(KeyEvent.VK_ENTER);
+        //print it
+        System.out.println("Uploading File");
+        logger.log(LogStatus.INFO,"Uploading File");
     }//end of upload file using Robot command
 
 
 
+
+    // method to upload a file(image,doc, etc...) from your computer by using robot command
+    public static void uploadFileCustom(String filePath,ExtentTest logger) throws AWTException {
+        StringSelection ss = new StringSelection(filePath);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss,null);
+        Robot robot=new Robot();
+        robot.delay(1000);
+        //This step clicks on 'Browse' button
+        robot.keyPress(KeyEvent.VK_ENTER);
+        //This step clicks on 'File name' textbox
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        //Next two steps does "Ctrl+V" and paste the filepath
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        //This step attached the file and clicks on 'Open'
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        //release
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        //print it
+        System.out.println("Uploading File");
+        logger.log(LogStatus.INFO,"Uploading File");
+    }//end of upload file using Robot command
+
+
+
+
+    public static void uploadFile(String fileLocation,ExtentTest logger) {
+        try {
+            //Setting clipboard with file location
+            StringSelection stringSelection = new StringSelection(fileLocation);
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+            //native key strokes for CTRL, V and ENTER keys
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            System.out.println("Uploading File");
+            logger.log(LogStatus.INFO,"Uploading File");
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+    }//end of uploadFile method
+
+
+
+
+
+
+    //Scroll Down the down of the page
+    public static void scrollDown(WebDriver driver,int pixel,ExtentTest logger) throws InterruptedException {
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("scroll(0,"+pixel+")");//scroll down by using executeScript command
+        Thread.sleep(1000);
+        System.out.println("Scrolling Down");
+        logger.log(LogStatus.PASS,"Scrolling Down");
+    }
+
+
+
+
+
+
+    //Scroll Up
+    public static void scrollUp(WebDriver driver,int pixel,ExtentTest logger) throws InterruptedException {
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("scroll(0,"+pixel+")");//scroll UP by using executeScript command
+        Thread.sleep(1000);
+        System.out.println("Scrolling UP");
+        logger.log(LogStatus.PASS,"Scrolling UP");
+    }
 
 
 

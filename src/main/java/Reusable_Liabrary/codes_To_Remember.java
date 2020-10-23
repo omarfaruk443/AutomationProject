@@ -3,7 +3,7 @@ package Reusable_Liabrary;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
-public class codes_To_Remember extends Reusable_Library.Abstract_Class {
+public class codes_To_Remember extends Abstract_Class {
     @Test
     public void codes() {
 
