@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Automation Cucumber Suite">
+    <test name="Cucumber Regression Test" preserve-order="true">
+        <classes>
+            <!--<class name="Cucumber_Framework.Step_Definitions.Google_Search_Result" />-->
+            <class name="Cucumber_Framework.Step_Definition_2.Google_Search_Result_Loop" />
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
